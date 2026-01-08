@@ -1,0 +1,502 @@
+/* ================================================
+    DRAK-WEB OG | THE COMPLETE MARKETPLACE CSS v3.0
+    ================================================
+    Theme: Cyberpunk Neon Dark
+    Author: James Born & Gemini Partner
+*/
+
+/* 1. Global Setup & Variables */
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: #111111;
+    --neon-green: #39ff14;
+    --neon-purple: #bc13fe;
+    --neon-pink: #ff00ff;
+    --neon-blue: #00d2ff;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-heavy: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --text-gray: #888888;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Custom Scrollbar for Chrome/Safari */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+    background: #222;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans Lao', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* 2. Background Elements */
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(57, 255, 20, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(188, 19, 254, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, #050505 0%, #000 100%);
+    z-index: -1;
+}
+
+/* 3. Sidebar Navigation */
+.sidebar-left {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 80px;
+    background: rgba(0, 0, 0, 0.9);
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    gap: 35px;
+    z-index: 2000;
+    backdrop-filter: blur(20px);
+}
+
+.nav-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: var(--glass);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-gray);
+    font-size: 24px;
+    border: 1px solid transparent;
+}
+
+.nav-icon:hover {
+    background: rgba(57, 255, 20, 0.1);
+    color: var(--neon-green);
+    transform: translateX(5px);
+    border-color: var(--neon-green);
+}
+
+.nav-icon.active {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 25px var(--neon-green);
+    border-color: var(--neon-green);
+}
+
+/* 4. Layout & Header */
+.main-content {
+    margin-left: 80px;
+    padding: 40px;
+    max-width: 1600px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.logo-text {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.logo-text span {
+    color: var(--neon-green);
+    text-shadow: 0 0 15px var(--neon-green);
+}
+
+.search-container {
+    position: relative;
+    width: 350px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 25px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 50px;
+    color: white;
+    outline: none;
+    transition: var(--transition);
+    font-size: 14px;
+}
+
+.search-input:focus {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+    width: 110%;
+}
+
+/* 5. Featured Hero Section (Rank #1) */
+.featured-card {
+    background: linear-gradient(135deg, #111 0%, #050505 100%);
+    border-radius: 40px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    border: 2px solid var(--neon-pink);
+    margin-bottom: 60px;
+    cursor: pointer;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.featured-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,0,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.featured-card:hover {
+    transform: scale(1.02) translateY(-10px);
+    box-shadow: 0 20px 50px rgba(255, 0, 255, 0.3);
+}
+
+.popular-badge {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    background: var(--neon-pink);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px var(--neon-pink);
+    z-index: 10;
+}
+
+.featured-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 30px;
+    background: #000;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.featured-info h2 {
+    font-size: 40px;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    background: linear-gradient(to right, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.featured-info p {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--neon-green);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+}
+
+/* 6. Market Grid & Cards */
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.product-card {
+    background: var(--bg-card);
+    border-radius: 30px;
+    padding: 20px;
+    border: 1px solid #222;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    border-color: var(--neon-green);
+    transform: translateY(-15px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+.product-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    transition: 0.5s;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+.product-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #efefef;
+}
+
+.product-card .price {
+    color: var(--neon-green);
+    font-size: 22px;
+    font-weight: 900;
+}
+
+/* 7. Seller Dashboard & Forms */
+.seller-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+}
+
+.glass-panel {
+    background: rgba(15, 15, 15, 0.8);
+    border: 1px solid #222;
+    padding: 40px;
+    border-radius: 35px;
+    backdrop-filter: blur(30px);
+}
+
+.camera-ui {
+    width: 100%;
+    height: 300px;
+    border: 2px dashed #333;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #050505;
+    transition: 0.3s;
+}
+
+.camera-ui:hover {
+    border-color: var(--neon-pink);
+    background: rgba(255, 0, 255, 0.02);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: #000;
+    border: 1px solid #222;
+    border-radius: 15px;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-input:focus {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 20px;
+    background: var(--neon-green);
+    color: #000;
+    border: none;
+    border-radius: 18px;
+    font-weight: 900;
+    font-size: 18px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px var(--neon-green);
+}
+
+/* 8. Store Modal (The Detailed View) */
+.store-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(15px);
+    padding: 20px;
+}
+
+.store-modal {
+    background: #0a0a0a;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 40px;
+    border: 1px solid #222;
+    position: relative;
+    box-shadow: 0 0 100px rgba(0,0,0,1);
+    animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 20px;
+    font-weight: 800;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.modal-btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.2);
+}
+
+/* 9. Animations & Effects */
+@keyframes popUp {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.stat-box {
+    background: linear-gradient(to right, rgba(57, 255, 20, 0.1), transparent);
+    padding: 30px;
+    border-radius: 25px;
+    border-left: 5px solid var(--neon-green);
+}
+
+/* 10. Mobile Responsiveness (Critical) */
+@media (max-width: 768px) {
+    .sidebar-left {
+        width: 100%;
+        height: 70px;
+        bottom: 0;
+        top: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0;
+        border-right: none;
+        border-top: 1px solid #222;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-bottom: 100px;
+        padding: 20px;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    .featured-card {
+        flex-direction: column;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .featured-img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .seller-container {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-info h2 {
+        font-size: 28px;
+    }
+}
+
+/* Additional Filler for Length and Detail - Page Transitions */
+.page {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Success/Error Toast placeholder styles */
+.toast {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: var(--neon-green);
+    color: #000;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
