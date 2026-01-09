@@ -240,21 +240,20 @@
     </div>
 
     <script>
-        // --- ຕັ້ງຄ່າລິ້ງ API ໃຫ້ຖືກຕ້ອງ ---
-        // --- ຕັ້ງຄ່າລິ້ງ API ໃຫ້ຖືກຕ້ອງ ---
-const API_BASE = "https://drakweb-market-shop.vercel.app";
-let allProducts = [];
-        
+        // --- ຕັ້ງຄ່າລິ້ງ API ໃຫ້ໃຊ້ Domain ປະຈຸບັນອັດຕະໂນມັດ ---
+        const API_BASE = window.location.origin;
+        let allProducts = [];
 
         // 1. Fetch Data from Server
         async function loadMarketData() {
             try {
                 const response = await fetch(`${API_BASE}/api/products`);
+                if (!response.ok) throw new Error('Network error');
                 allProducts = await response.json();
                 renderMarket(allProducts);
             } catch (err) {
-                console.log("Server error or sleep mode. Retrying...");
-                setTimeout(loadMarketData, 3000); // ຖ້າບໍ່ໄດ້ ໃຫ້ລອງໃໝ່ທຸກ 3 ວິ
+                console.log("ກຳລັງເຊື່ອມຕໍ່ Server...");
+                setTimeout(loadMarketData, 3000); 
             }
         }
 
@@ -270,7 +269,7 @@ let allProducts = [];
                 return;
             }
 
-            // Render Rank #1
+            // Render Rank #1 (Popular)
             const top = data[0];
             featuredContainer.innerHTML = `
                 <div class="featured-card" onclick="viewStore(${top.id})">
@@ -284,7 +283,7 @@ let allProducts = [];
                 </div>
             `;
 
-            // Render Others
+            // Render All Products
             data.forEach((item) => {
                 container.innerHTML += `
                     <div class="product-card" onclick="viewStore(${item.id})">
@@ -298,16 +297,10 @@ let allProducts = [];
             document.getElementById('user-p-count').innerText = data.length;
         }
 
-        // 3. View Store & Increase View
+        // 3. View Store Modal
         async function viewStore(id) {
             const store = allProducts.find(p => p.id == id);
             if(!store) return;
-
-            // ຍິງ API ໄປນັບ View ຢູ່ Server
-            try {
-                await fetch(`${API_BASE}/api/products/${id}/view`, { method: 'POST' });
-                store.views = (store.views || 0) + 1;
-            } catch(e) {}
 
             const modalHTML = `
                 <div class="store-overlay" id="modal-container" onclick="closeStore()">
@@ -329,19 +322,19 @@ let allProducts = [];
         function closeStore() {
             const m = document.getElementById('modal-container');
             if(m) m.remove();
-            loadMarketData();
         }
 
-        // 4. Publish Logic (POST ກັບໄປຫາ Render)
+        // 4. Publish Logic
         async function handlePublish() {
             const name = document.getElementById('p-name').value;
             const price = document.getElementById('p-price').value;
             const wa = document.getElementById('p-wa').value;
             const fb = document.getElementById('p-fb').value;
-            const img = document.getElementById('preview-img').src;
+            const imgElement = document.getElementById('preview-img');
+            const img = imgElement.src;
 
-            if(!name || !price || !wa || !img || img.includes('undefined')) {
-                alert("ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບ!");
+            if(!name || !price || !wa || !img || imgElement.style.display === 'none') {
+                alert("ກະລຸນາກອກຂໍ້ມູນ ແລະ ຖ່າຍຮູບສິນຄ້າໃຫ້ຄົບ!");
                 return;
             }
 
@@ -353,6 +346,10 @@ let allProducts = [];
                 fb 
             };
 
+            const btn = document.querySelector('.btn-submit');
+            btn.innerText = "⏳ ກຳລັງລົງຂາຍ...";
+            btn.disabled = true;
+
             try {
                 const res = await fetch(`${API_BASE}/api/products`, {
                     method: 'POST',
@@ -362,9 +359,14 @@ let allProducts = [];
                 if(res.ok) {
                     alert("ລົງຮ້ານສຳເລັດ!");
                     location.reload();
+                } else {
+                    alert("ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ!");
                 }
             } catch(e) { 
-                alert("Server ພວມຕື່ນ... ກະລຸນາລໍຖ້າ 30 ວິນາທີແລ້ວລອງໃໝ່"); 
+                alert("Server ກຳລັງເຊື່ອມຕໍ່... ກະລຸນາລໍຖ້າແລ້ວລອງໃໝ່"); 
+            } finally {
+                btn.innerText = "🚀 ລົງຂາຍທັນທີ";
+                btn.disabled = false;
             }
         }
 
@@ -400,8 +402,3 @@ let allProducts = [];
     </script>
 </body>
 </html>
-
-
-
-
-
